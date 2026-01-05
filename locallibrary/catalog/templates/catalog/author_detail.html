@@ -1,0 +1,23 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+  <h1>Автор: {{ author.title }}</h1>
+
+  <p><strong>Имя:</strong> {{ author.last_name }}</p>
+  <p><strong>Фамилия:</strong> {{ author.first_name }}</p>
+  <p><strong>Дата рождения:</strong> {{ author.date_of_birth }}</p>
+  <p><strong>Дата смерти:</strong> {{ author.date_of_death }}</p>
+
+  <div style='padding:10px;'>
+    <h4>Книги:</h4>
+        {% for copy in author.book_set.all %}
+            <p><b>Заголовок:</b> <a href='{{ copy.get_absolute_url }}'>{{copy.title}}</a></p>
+            <p><b>Описание:</b> {{copy.summary}}</p>
+            <p><b>Жанр:</b> {{copy.dislpay_genre}}</p>
+            <p><b>Язык:</b> {{copy.language}}</p>
+            {% if not forloop.last%}
+              <hr> 
+            {% endif %}
+        {% endfor %}
+  </div>
+{% endblock %}

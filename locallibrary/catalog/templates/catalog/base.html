@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Главная страница</title>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        margin: 10 px;
+        padding: 10 px
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='for_nav'>
+      <nav style='padding: 10px; background-color: #EEF2F3'>
+        <a href='{% url 'index' %}'>Главная страница</a>
+        <a href='{% url "books" %}'>Книги</a>
+        <a href='{% url "authors" %}'> Авторы</a>
+        <a href='{% url "my_books" %}'> Мои книги</a>
+          {% if user.is_staff %}
+            <a href='{% url "my_tools" %}'>Инструменты</a>
+          {% endif %}
+      </nav>
+    <div>
+  {% block content %}{% endblock %}
+  </body>
+</html>

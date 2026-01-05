@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<h1>
+    Список книг
+</h1>
+
+{% if book_lst %}
+    <ul>
+        {% for book in book_lst %}
+            <li>
+                <a href='{{ book.get_absolute_url }}'>{{ book.title }} </a>{{book.author}}
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %} 
+            </li>
+            
+        {% endfor %}
+    </ul> 
+{% else %}
+    <p>Книги отсутствуют</p>
+{% endif %}
+
+{% endblock %}

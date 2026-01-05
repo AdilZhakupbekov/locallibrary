@@ -1,0 +1,21 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+<h1>Главная страница библиотеки</h1>
+
+  <p>Добро пожаловать в <em>Локальную библиотеку</em>, данный сайт быть сконструирован на фреймфорке <em>Django</em>.</p>
+
+<h2>Контент</h2>
+
+  <p>Записи:</p>
+  <ul>
+    <li><strong>Книги:</strong> {{ num_books }}</li>
+    <li><strong>Копии:</strong> {{ num_instance }}</li>
+    <li><strong>Наличие копий:</strong> {{ num_instance_available }}</li>
+    <li><strong>Авторы:</strong> {{ num_authors }}</li>
+    <li><strong>Жанры:</strong> {{ num_genre }}</li>
+    <li><strong>Количество книг:</strong> {{ num_tbooks }}</li>
+  </ul>
+
+  <p>Количество посещений: {{ num_visits }}</p>
+{% endblock %}

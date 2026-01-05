@@ -1,0 +1,12 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+  <h1>Удаление автора</h1>
+
+  <p>Вы уверен что хотите удалить автора: {{ author }}?</p>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Да, удалить." />
+  </form>
+{% endblock %}
