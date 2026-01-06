@@ -73,7 +73,7 @@ class MyToolsView(PermissionRequiredMixin, generic.ListView):
     context_object_name = 'instances'
 
     def get_queryset(self):
-        return BookInstance.objects.select_related('book', 'borrower').filter(book__isnull=False)
+        return BookInstance.objects.select_related('book', 'borrower').filter(book__isnull=False, borrower__isnull=False).order_by('book__pk')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

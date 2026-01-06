@@ -1,29 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>Главная страница</title>
     <meta charset='UTF-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      body {
-        margin: 10 px;
-        padding: 10 px
-        background-color: black;
-      }
-    </style>
+    <link rel='stylesheet' href='{% static "css/styles.css" %}'> 
   </head>
   <body>
-    <div class='for_nav'>
-      <nav style='padding: 10px; background-color: #EEF2F3'>
-        <a href='{% url 'index' %}'>Главная страница</a>
-        <a href='{% url "books" %}'>Книги</a>
-        <a href='{% url "authors" %}'> Авторы</a>
-        <a href='{% url "my_books" %}'> Мои книги</a>
+    <div class="layout">
+      <aside class="sidebar">
+        <h1 class="logo">Библиотека</h1>
+        <nav class="side-nav">
+          <a href="{% url 'index' %}">Главная</a>
+          <a href="{% url 'books' %}">Книги</a>
+          <a href="{% url 'authors' %}">Авторы</a>
+          <a href="{% url 'my_books' %}">Мои книги</a>
           {% if user.is_staff %}
-            <a href='{% url "my_tools" %}'>Инструменты</a>
+            <a href="{% url 'my_tools' %}">Инструменты</a>
           {% endif %}
-      </nav>
-    <div>
-  {% block content %}{% endblock %}
+        </nav>
+      </aside>
+      <main class="content element">
+        {% block content %}{% endblock %}
+          <div class='for_paginate'>
+            {% if is_paginated %}
+              <nav class="pagination">
+                {% if page_obj.has_previous %}
+                  <a href="?page={{ page_obj.previous_page_number }}">←</a>
+                {% endif %}
+                  <span>
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                  </span>
+                {% if page_obj.has_next %}
+                  <a href="?page={{ page_obj.next_page_number }}">→</a>
+                {% endif %}
+              </nav>
+            {% endif %}
+          </div>
+      </main>
+    </div>
   </body>
 </html>

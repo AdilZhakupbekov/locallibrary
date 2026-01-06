@@ -1,3 +1,29 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
+  <h1 class='nm-page'>Настройки</h1>
+  <table class='for_table'>
+
+    <thead class='for_thead'>
+      <tr>
+        <th>ID</th>
+        <th>Книга</th>
+        <th>Владелец</th>
+        <th>Дата возврата</th>
+        <th>Панель</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      {% for ins in instances %}
+        <tr>
+            <td>{{ins.book.pk}}</td>
+            <td>{{ins.book.title}}</td>
+            <td>{{ins.borrower}}</td>
+            <td>{{ins.due_back}}</td>
+            <td><a href="{% url 'book_renew' ins.pk %}">Редактировать</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
 {% endblock %}
