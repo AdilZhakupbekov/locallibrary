@@ -1,8 +1,9 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
   <h1 class='nm-page'>Настройки</h1>
-  <table class='for_table'>
 
+  <b>Панель возврата книг</b>
+  <table class='for_table'>
     <thead class='for_thead'>
       <tr>
         <th>ID</th>
@@ -12,7 +13,6 @@
         <th>Панель</th>
       </tr>
     </thead>
-    
     <tbody>
       {% for ins in instances %}
         <tr>
@@ -24,6 +24,21 @@
         </tr>
       {% endfor %}
     </tbody>
-
   </table>
+
+
+  <b>Панель добавления</b>
+  <div class='vert-forms'>
+    <ul>
+      <li><a href='{% url "book_create" %}'>Добавить книгу</a></li>
+      <li><a href='{% url "author_create" %}'>Добавить автора</a></li>
+    </ul>
+  </div>
+
+  <b>Панель удаления</b>
+  <div>
+    
+
+  </div>
+
 {% endblock %}

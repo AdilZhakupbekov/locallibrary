@@ -1,14 +1,26 @@
 {% extends "catalog/base.html" %}
 {% block content %}
 
-    <h1>Книга: {{bookinst.book.title}}</h1>
-    <p>Заемщик: {{bookinst.borrower}}</p>
-    <p{% if bookinst.is_overdue %} class="text-danger"{% endif %}>Дата возврата: {{bookinst.due_back}}</p>
+    <div class='for-form'>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Отправить" class='btn'>
+        </form>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Книга</th>
+            <th>Заемщик</th>
+            <th>{% if bookinst.is_overdue %} class="text-danger"{% endif %}Дата возврата</th>
+        </tr>
+        <tr>
+            <td>{{bookinst.book.title}}</td>
+            <td>{{bookinst.borrower}}</td>
+            <td>{{bookinst.due_back}}</td>
+        </tr>
+    </table>
 
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Отправить" />
-    </form>
 
 {% endblock %}

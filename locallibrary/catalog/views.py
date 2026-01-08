@@ -8,6 +8,7 @@ import datetime
 from .forms import RenewBookModelForm, AuthorForm
 from django.contrib.auth.decorators import permission_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.db.models import Q
 
 
 def index(request):
@@ -33,11 +34,28 @@ class BookListView(generic.ListView):
     context_object_name = 'book_lst'
 
     def get_queryset(self):
-        return Book.objects.all()
+        queryset = Book.objects.all()
+        q = self.request.GET.get('q')
+
+        if q:
+            queryset = queryset.filter(
+                Q(title__icontains=q) |
+                Q(author__last_name__icontains=q) |
+                Q(author__first_name__icontains=q)
+            )
+
+        return queryset
     
 class BookDetailView(generic.DetailView):
     model = Book
     template_name = 'catalog/book_detail.html'
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 10
+    template_name = 'catalog/author_list.html'
+    context_object_name = 'author_lst'
 
 class AuthorListView(generic.ListView):
     model = Author
@@ -46,7 +64,22 @@ class AuthorListView(generic.ListView):
     context_object_name = 'author_lst'
 
     def get_queryset(self):
-        return Author.objects.all()
+        queryset = Author.objects.all()
+        q = self.request.GET.get('q', '').strip()
+
+        if q:
+            parts = q.split()
+
+            query = Q()
+            for part in parts:
+                query &= (
+                    Q(first_name__icontains=part) |
+                    Q(last_name__icontains=part)
+                )
+
+            queryset = queryset.filter(query)
+
+        return queryset
     
 class AuthorDetailView(generic.DetailView):
     model = Author
@@ -63,30 +96,8 @@ class LoanedBookListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'borrower_lst'
 
     def get_queryset(self):
-        return BookInstance.objects.filter(borrower=self.request.user, status__in=['в', 'з']).order_by('due_back')
+        return BookInstance.objects.filter(borrower=self.request.user, status__in=['o', 'r']).order_by('due_back')
     
-class MyToolsView(PermissionRequiredMixin, generic.ListView):
-    permission_required = ('catalog.can_mark_returned', 
-                           'catalog.can_edit',)
-    model = BookInstance
-    template_name = 'catalog/my_tools.html'
-    context_object_name = 'instances'
-
-    def get_queryset(self):
-        return BookInstance.objects.select_related('book', 'borrower').filter(book__isnull=False, borrower__isnull=False).order_by('book__pk')
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # provide an empty AuthorForm and list of authors for inline add/delete
-        context['author_form'] = AuthorForm()
-        context['authors'] = Author.objects.all().order_by('last_name', 'first_name')
-        # provide book form and books list for inline add/delete
-        from .forms import BookForm
-        context['book_form'] = BookForm()
-        context['books'] = Book.objects.all().order_by('title')
-        return context
-
-
 @permission_required('catalog.can_edit')
 def create_book_inline(request):
     if request.method == 'POST':
@@ -143,6 +154,25 @@ class BookDelete(DeleteView):
     model = Book
     success_url = reverse_lazy('books')
 
+class MyToolsView(PermissionRequiredMixin, generic.ListView):
+    permission_required = ('catalog.can_mark_returned', 
+                           'catalog.can_edit',)
+    model = BookInstance
+    template_name = 'catalog/my_tools.html'
+    context_object_name = 'instances'
 
+    def get_queryset(self):
+        return BookInstance.objects.select_related('book', 'borrower').filter(book__isnull=False, borrower__isnull=False).order_by('book__title')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # provide an empty AuthorForm and list of authors for inline add/delete
+        context['author_form'] = AuthorForm()
+        context['authors'] = Author.objects.all().order_by('last_name', 'first_name')
+        # provide book form and books list for inline add/delete
+        from .forms import BookForm
+        context['book_form'] = BookForm()
+        context['books'] = Book.objects.all().order_by('title')
+        return context
     
 

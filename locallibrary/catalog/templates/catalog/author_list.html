@@ -1,6 +1,12 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
     <h1 class='nm-page'>Список авторов</h1>
+        <div class='for-sform'>
+            <form method="get" action="{% url 'authors' %}">
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Поиск автора">
+                <button type="submit">Поиск</button>
+            </form>
+        </div>
     {% if author_lst %}
         <ul>
             {% for author in author_lst %}

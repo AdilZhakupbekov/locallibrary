@@ -87,7 +87,8 @@ class BookInstance(models.Model):
                        )
 
     def __str__(self):
-        return f'{self.id} {self.book.title}'
+        book_title = self.book.title if self.book else "—"
+        return f'{self.id} | {book_title}'
         
 class Author(models.Model):
 

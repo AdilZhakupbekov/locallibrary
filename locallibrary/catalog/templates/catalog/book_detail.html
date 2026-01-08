@@ -12,11 +12,15 @@
   <div style="margin-left:20px;margin-top:20px">
     <h4>Копии</h4>
         {% for copy in book.bookinstance_set.all %}
-        <hr>
-        <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-            {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
+          <hr>
+            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+              {{ copy.get_status_display }}
+            </p>
+              {% if copy.status != 'a' %}
+                <p><strong>Дата возврата:</strong> {{copy.due_back}}</p>
+              {% endif %}
             <p><strong>Издание:</strong> {{copy.imprint}}</p>
-        <p class="text-muted"><strong>ID:</strong> {{copy.id}}</p>
+            <p class="text-muted"><strong>ID:</strong> {{copy.id}}</p>
         {% endfor %}
   </div>
 {% endblock %}

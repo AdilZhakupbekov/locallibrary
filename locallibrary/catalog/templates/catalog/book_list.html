@@ -2,7 +2,14 @@
 {% load static %}
 {% block content %}
 <h1 class='nm-page'>Список книг</h1>
-
+    <div class='for-sform'>
+    <form method="get">
+        <input type="text" name="q"
+            value="{{ request.GET.q }}"
+            placeholder="Поиск книг">
+        <button type="submit">Поиск</button>
+    </form>
+    </div>
 {% if book_lst %}
     <ul>
         {% for book in book_lst %}

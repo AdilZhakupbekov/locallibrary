@@ -11,7 +11,7 @@ body {
 }
 
 .sidebar {
-      width: 150px;
+      width: 200px;
       background: rgb(222, 229, 238);
       border-right: 1px solid black;
       padding: 20px 16px;
@@ -21,6 +21,7 @@ body {
       margin: 0 0 20px;
       font-size: 25px;
       color: #2F3E46;
+      padding: 0 9px;
 }
 
 .side-nav a {
@@ -99,4 +100,83 @@ td {
 tbody tr:hover {
   background-color: #F9FAFB;
 }
+
+.vert-forms {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-weight: 600;
+  text-align: left;
+  background-color: rgb(222, 229, 238);
+  max-width: 300px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.vert-forms ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.for-form {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-weight: 600;
+  text-align: left;
+  background-color: rgb(222, 229, 238);
+  max-width: 800px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.for-form input {
+  margin-top: 12px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #F7FAF8;
+  color: #000000;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .1s ease;
+}
+
+.for-sform {
+  border-radius: 5px;
+  background-color: rgb(222, 229, 238);
+  max-width: 240px;
+  border: solid black 1px;
+}
+
+.for-sform input {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #F7FAF8;
+  color: #000000;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .1s ease;
+  max-width: 500px;
+}
+
+.sidebar-form {
+  border: none;
+  border-radius: 5px;
+  margin: 0px;
+  padding: 15px;
+  background-color: #b2bfdc;
+}
+
+.sidebar-form input {
+  border: none;
+  border-radius: 5px
+}
+
+.sidebar-form input:hover {
+  background: grey;
+}
+
 

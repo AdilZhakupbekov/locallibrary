@@ -3,10 +3,10 @@
 {% block content %}
     <h1 class='nm-page'>Мои книги</h1>
 
-    {% if barrowed_lst %}
+    {% if borrower_lst %}
     <ul>
 
-      {% for bookinst in barrowed_lst %}
+      {% for bookinst in borrower_lst %}
       <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
         <a href="{% url 'book_detail' bookinst.book.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }})
       </li>
