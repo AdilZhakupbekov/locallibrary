@@ -1,0 +1,16 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <h1 class='nm-page'>Аренда книги</h1>
+
+    <form method='POST'>
+        {% csrf_token %}
+        <div style='border: rgba(94, 93, 93, 1) solid 5px; border-radius: 5px; background-color: rgb(106, 106, 106); max-width: 380px; padding: 10px'>
+            <label for='{{form.due_back.id_for_label}}'>
+                {{form.due_back}}
+                {{form.due_back.label}}
+                {{form.due_back.errors}}
+            </label>
+        </div>
+        <input type='submit' value='Арендовать' class='btn' style='margin-top: 5px;'>
+    </form>
+{% endblock %}

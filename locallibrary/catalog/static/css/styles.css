@@ -179,4 +179,16 @@ tbody tr:hover {
   background: grey;
 }
 
+.btn {
+  border: solid rgb(137, 155, 165) 5px;
+  border-radius: 5px;
+  background-color: rgb(160, 182, 195);
+  padding: 9px 15px 12px;
+  font-size: 15px;
+}
+
+.btn:hover {
+  background-color: grey;
+}
+
 

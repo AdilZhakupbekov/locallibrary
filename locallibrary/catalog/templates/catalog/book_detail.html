@@ -13,14 +13,20 @@
     <h4>Копии</h4>
         {% for copy in book.bookinstance_set.all %}
           <hr>
-            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
-              {{ copy.get_status_display }}
-            </p>
-              {% if copy.status != 'a' %}
-                <p><strong>Дата возврата:</strong> {{copy.due_back}}</p>
-              {% endif %}
-            <p><strong>Издание:</strong> {{copy.imprint}}</p>
-            <p class="text-muted"><strong>ID:</strong> {{copy.id}}</p>
+            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
+                {% if copy.status == 'a' %}
+                  {% if user.is_authenticated %}
+                    <form method='GET' action='{% url "reserve_book" copy.pk %}'>
+                      {%csrf_token%}
+                      {{form}}
+                      <input type='submit' value='Арендовать' class='btn'>
+                    </form>
+                  {% endif%}
+                {% elif copy.status != 'a' %}
+                  <p><strong>Дата возврата:</strong> {{copy.due_back}}</p>
+                {% endif %}
+                  <p><strong>Издание:</strong> {{copy.imprint}}</p>
+                  <p class="text-muted"><strong>ID:</strong> {{copy.id}}</p>
         {% endfor %}
   </div>
 {% endblock %}

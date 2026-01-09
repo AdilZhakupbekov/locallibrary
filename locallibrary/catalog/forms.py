@@ -3,7 +3,7 @@ import datetime
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.forms import ModelForm
-from .models import BookInstance, Author
+from .models import BookInstance, Author, Book
 
 class HTML5DateInput(forms.DateInput):
     input_type = 'date'
@@ -45,9 +45,26 @@ class BookForm(forms.ModelForm):
         fields = ['title', 'author', 'language', 'isbn', 'summary', 'genre']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.Select(attrs={'class': 'form-control'}),
+            'language': forms.TextInput(attrs={'class': 'form-control'}),
             'language': forms.Select(attrs={'class': 'form-control'}),
             'isbn': forms.TextInput(attrs={'class': 'form-control'}),
             'summary': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'genre': forms.SelectMultiple(attrs={'class': 'form-control'})
         }
+
+class ReserveBookForm(forms.ModelForm):
+    class Meta:
+        model = BookInstance
+        fields = ['due_back']
+        labels = { 'due_back': _('Установите дату возврата'), }
+        widgets = {
+            'due_back': HTML5DateInput(attrs={'class': 'form-control'}),
+        }
+
+class DeleteBook(forms.Form):
+    book = forms.ModelChoiceField(
+        queryset=Book.objects.select_related('author'),
+        label='Выберите книгу'
+    )

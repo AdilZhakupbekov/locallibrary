@@ -5,7 +5,7 @@ from django.views import generic, View
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse, reverse_lazy
 import datetime
-from .forms import RenewBookModelForm, AuthorForm
+from .forms import RenewBookModelForm, AuthorForm, ReserveBookForm, DeleteBook
 from django.contrib.auth.decorators import permission_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.db.models import Q
@@ -175,4 +175,17 @@ class MyToolsView(PermissionRequiredMixin, generic.ListView):
         context['books'] = Book.objects.all().order_by('title')
         return context
     
+class ReserveBook(UpdateView):
+    model = BookInstance
+    form_class = ReserveBookForm
+    template_name = 'catalog/reserve_book.html'
+    success_url = reverse_lazy('books')
+
+    def form_valid(self, form):
+        form.instance.borrower = self.request.user
+        form.instance.status = 'o'
+        return super().form_valid(form)
+    
+class DeleteBookView(View):
+    template_name = 'catalog/book_delete.html'
 
