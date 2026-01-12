@@ -12,6 +12,9 @@
             {% for author in author_lst %}
                 <li> 
                     <a href='{{author.get_absolute_url }}'>{{author.last_name}} {{author.first_name}}</a>
+                    {% if user.is_staff %}
+                        - <a href="{% url 'author_delete' author.pk %}">Удалить</a>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>

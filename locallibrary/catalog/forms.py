@@ -63,8 +63,3 @@ class ReserveBookForm(forms.ModelForm):
             'due_back': HTML5DateInput(attrs={'class': 'form-control'}),
         }
 
-class DeleteBook(forms.Form):
-    book = forms.ModelChoiceField(
-        queryset=Book.objects.select_related('author'),
-        label='Выберите книгу'
-    )

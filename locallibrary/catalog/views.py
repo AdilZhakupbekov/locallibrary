@@ -5,7 +5,7 @@ from django.views import generic, View
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse, reverse_lazy
 import datetime
-from .forms import RenewBookModelForm, AuthorForm, ReserveBookForm, DeleteBook
+from .forms import RenewBookModelForm, AuthorForm, ReserveBookForm
 from django.contrib.auth.decorators import permission_required
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.db.models import Q
@@ -186,6 +186,13 @@ class ReserveBook(UpdateView):
         form.instance.status = 'o'
         return super().form_valid(form)
     
-class DeleteBookView(View):
+class DeleteBookView(DeleteView):
+    model = Book
     template_name = 'catalog/book_delete.html'
+    success_url = reverse_lazy('books')
 
+    
+class DeleteAuthorView(DeleteView):
+    model = Author
+    template_name = 'catalog/author_delete.html'
+    success_url = reverse_lazy('authors')
