@@ -1,39 +1,39 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
 
-<div class="mb-4">
-  <h1 class="mb-3">Список книг</h1>
+<div class="">
+  <h1 class="">Список книг</h1>
 
-  <form method="get" class="row g-1">
-    <div class="col-md-6">
+  <form method="get" class="">
+    <div class="">
       <input
         type="text"
         name="q"
         value="{{ request.GET.q }}"
-        class="form-control"
+        class=""
         placeholder="Поиск книг">
     </div>
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary">Поиск</button>
+    <div class="">
+      <button type="submit" class="">Поиск</button>
     </div>
   </form>
 </div>
 
 {% if book_lst %}
-  <div class="card shadow-sm">
-    <ul class="list-group">
+  <div class="">
+    <ul class="">
       {% for book in book_lst %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <li class="">
 
           <div>
-            <a href="{{ book.get_absolute_url }}" class="text-decoration-none">
+            <a href="{{ book.get_absolute_url }}" class="">
               {{ book.title }}
             </a>
-            <div class="text-muted small">Автор: {{ book.author }}</div>
+            <div class="">Автор: {{ book.author }}</div>
           </div>
 
           {% if user.is_staff %}
-            <a href="{% url 'book_delete' book.pk %}" class="btn btn-danger">Удалить</a>
+            <a href="{% url 'book_delete' book.pk %}" class="">Удалить</a>
           {% endif %}
 
         </li>
@@ -41,7 +41,7 @@
     </ul>
   </div>
 {% else %}
-  <div class="alert">
+  <div class="">
     Книги отсутствуют
   </div>
 {% endif %}

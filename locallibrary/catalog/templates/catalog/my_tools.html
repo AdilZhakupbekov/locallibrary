@@ -1,26 +1,26 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
 
-<div class="mb-4">
+<div class="">
   <h1>Настройки</h1>
-  <p class="text-muted mb-0">Управление арендованными книгами</p>
+  <p class="">Управление арендованными книгами</p>
 </div>
 
-<div class="card shadow-sm mb-4">
-  <div class="card-body p-0">
+<div class="">
+  <div class="">
 
-    <table class="table table-sm table-hover mb-0">
-      <caption class="px-3 py-2 text-muted">
+    <table class="">
+      <caption class="">
         Список арендованных книг
       </caption>
 
-      <thead class="table-light">
+      <thead class="">
         <tr>
           <th scope="col">ID</th>
           <th scope="col">Книга</th>
           <th scope="col">Владелец</th>
           <th scope="col">Дата возврата</th>
-          <th scope="col" class="text-end">Действия</th>
+          <th scope="col" class="">Действия</th>
         </tr>
       </thead>
 
@@ -31,13 +31,13 @@
             <td class="fw-semibold">{{ ins.book.title }}</td>
             <td>{{ ins.borrower }}</td>
             <td>{{ ins.due_back }}</td>
-            <td class="text-end">
+            <td class="">
               <a href="{% url 'book_renew' ins.pk %}"
-                 class="btn btn-outline-primary btn-sm">
+                 class="">
                 Редактировать
               </a>
               <a href="{% url 'return_book' ins.pk %}"
-                 class="btn btn-outline-danger btn-sm">
+                 class="">
                 Возвратить
               </a>
             </td>
@@ -49,15 +49,15 @@
   </div>
 </div>
 
-<div class="card shadow-sm">
-  <div class="card-body">
-    <h2 class="h6 mb-3">Добавление объектов</h2>
+<div class="">
+  <div class="">
+    <h2 class="">Добавление объектов</h2>
 
-    <div class="d-flex gap-2">
-      <a class="btn btn-primary" href="{% url 'book_create' %}">
+    <div class="">
+      <a class="" href="{% url 'book_create' %}">
         Добавить книгу
       </a>
-      <a class="btn btn-primary" href="{% url 'author_create' %}">
+      <a class="" href="{% url 'author_create' %}">
         Добавить автора
       </a>
     </div>

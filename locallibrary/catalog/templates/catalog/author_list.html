@@ -2,20 +2,20 @@
 
 {% block content %}
 
-<div class="mb-4">
-  <h1 class="h3 mb-3">Список авторов</h1>
+<div class="">
+  <h1 class="">Список авторов</h1>
 
-  <form method="get" action="{% url 'authors' %}" class="row g-2">
-    <div class="col-md-6">
+  <form method="get" action="{% url 'authors' %}" class="">
+    <div class="">
       <input
         type="text"
         name="q"
         value="{{ request.GET.q }}"
-        class="form-control"
+        class=""
         placeholder="Поиск автора">
     </div>
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary">
+    <div class="">
+      <button type="submit" class="">
         Поиск
       </button>
     </div>
@@ -23,19 +23,19 @@
 </div>
 
 {% if author_lst %}
-  <div class="card shadow-sm">
-    <ul class="list-group list-group-flush">
+  <div class="">
+    <ul class="">
       {% for author in author_lst %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <li class="">
 
           <a href="{{ author.get_absolute_url }}"
-             class="fw-semibold text-decoration-none">
+             class="">
             {{ author.last_name }} {{ author.first_name }}
           </a>
 
           {% if user.is_staff %}
             <a href="{% url 'author_delete' author.pk %}"
-               class="btn btn-outline-danger btn-sm">
+               class="">
               Удалить
             </a>
           {% endif %}
@@ -45,7 +45,7 @@
     </ul>
   </div>
 {% else %}
-  <div class="alert alert-secondary">
+  <div class="">
     Данные об авторах отсутствуют
   </div>
 {% endif %}

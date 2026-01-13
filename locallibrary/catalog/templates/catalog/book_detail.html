@@ -2,30 +2,28 @@
 
 {% block content %}
 
-<!-- PAGE HEADER -->
-<div class="mb-4">
-  <h1 class="h3 mb-1">{{ book.title }}</h1>
-  <div class="text-muted">
+<div class="">
+  <h1 class="">{{ book.title }}</h1>
+  <div class="">
     Автор:
     <a href="{{ book.author.get_absolute_url }}"
-       class="text-decoration-none">
+       class="">
       {{ book.author }}
     </a>
   </div>
 </div>
 
-<!-- BOOK INFO -->
-<div class="card shadow-sm mb-4">
-  <div class="card-body">
-    <p class="mb-2">
+<div class="">
+  <div class="">
+    <p class="">
       <strong>Описание:</strong><br>
       {{ book.summary }}
     </p>
 
-    <div class="row small text-muted">
-      <div class="col-md-6"><strong>ISBN:</strong> {{ book.isbn }}</div>
-      <div class="col-md-6"><strong>Язык:</strong> {{ book.language }}</div>
-      <div class="col-12 mt-1">
+    <div class="">
+      <div class=""><strong>ISBN:</strong> {{ book.isbn }}</div>
+      <div class=""><strong>Язык:</strong> {{ book.language }}</div>
+      <div class="">
         <strong>Жанр:</strong>
         {% for genre in book.genre.all %}
           {{ genre }}{% if not forloop.last %}, {% endif %}
@@ -35,34 +33,31 @@
   </div>
 </div>
 
-<!-- COPIES -->
-<div class="card shadow-sm">
-  <div class="card-body">
-    <h2 class="h5 mb-3">Экземпляры</h2>
+<div class="">
+  <div class="">
+    <h2 class="">Экземпляры</h2>
 
     {% for copy in book.bookinstance_set.all %}
-      <div class="border rounded p-3 mb-3
-        {% if copy.status != 'a' %}border-warning{% else %}border-light{% endif %}">
-
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <div class="fw-semibold">
+      <div class="">
+        <div class="">
+          <div class="">
             {{ copy.get_status_display }}
           </div>
 
           {% if copy.status == 'a' and user.is_authenticated %}
             <form method="get" action="{% url 'reserve_book' copy.pk %}">
-              <button class="btn btn-sm btn-outline-primary">
+              <button class="">
                 Арендовать
               </button>
             </form>
           {% elif copy.status != 'a' %}
-            <span class="badge bg-warning text-dark">
+            <span class="">
               до {{ copy.due_back }}
             </span>
           {% endif %}
         </div>
 
-        <div class="small text-muted">
+        <div class="">
           <div><strong>Издание:</strong> {{ copy.imprint }}</div>
           <div><strong>ID:</strong> {{ copy.id }}</div>
         </div>
