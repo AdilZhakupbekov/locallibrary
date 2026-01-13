@@ -1,39 +1,67 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
-  <h1 class='nm-page'>Настройки</h1>
 
-  <b>Панель возврата книг</b>
-  <table class='for_table'>
-    <thead class='for_thead'>
-      <tr>
-        <th>ID</th>
-        <th>Книга</th>
-        <th>Владелец</th>
-        <th>Дата возврата</th>
-        <th>Панель</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for ins in instances %}
+<div class="mb-4">
+  <h1>Настройки</h1>
+  <p class="text-muted mb-0">Управление арендованными книгами</p>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body p-0">
+
+    <table class="table table-sm table-hover mb-0">
+      <caption class="px-3 py-2 text-muted">
+        Список арендованных книг
+      </caption>
+
+      <thead class="table-light">
         <tr>
-            <td>{{ins.book.pk}}</td>
-            <td>{{ins.book.title}}</td>
-            <td>{{ins.borrower}}</td>
-            <td>{{ins.due_back}}</td>
-            <td><a href="{% url 'book_renew' ins.pk %}">Редактировать</a></td>
+          <th scope="col">ID</th>
+          <th scope="col">Книга</th>
+          <th scope="col">Владелец</th>
+          <th scope="col">Дата возврата</th>
+          <th scope="col" class="text-end">Действия</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
 
+      <tbody>
+        {% for ins in instances %}
+          <tr>
+            <td>{{ ins.book.pk }}</td>
+            <td class="fw-semibold">{{ ins.book.title }}</td>
+            <td>{{ ins.borrower }}</td>
+            <td>{{ ins.due_back }}</td>
+            <td class="text-end">
+              <a href="{% url 'book_renew' ins.pk %}"
+                 class="btn btn-outline-primary btn-sm">
+                Редактировать
+              </a>
+              <a href="{% url 'return_book' ins.pk %}"
+                 class="btn btn-outline-danger btn-sm">
+                Возвратить
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-  <b>Панель добавления</b>
-  <div class='vert-forms'>
-    <ul>
-      <li><a href='{% url "book_create" %}'>Добавить книгу</a></li>
-      <li><a href='{% url "author_create" %}'>Добавить автора</a></li>
-    </ul>
   </div>
+</div>
 
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h2 class="h6 mb-3">Добавление объектов</h2>
+
+    <div class="d-flex gap-2">
+      <a class="btn btn-primary" href="{% url 'book_create' %}">
+        Добавить книгу
+      </a>
+      <a class="btn btn-primary" href="{% url 'author_create' %}">
+        Добавить автора
+      </a>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

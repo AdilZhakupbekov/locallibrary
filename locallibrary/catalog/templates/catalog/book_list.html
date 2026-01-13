@@ -1,28 +1,49 @@
 {% extends 'catalog/base.html' %}
-{% load static %}
 {% block content %}
-<h1 class='nm-page'>Список книг</h1>
-    <div class='for-sform'>
-    <form method="get">
-        <input type="text" name="q"
-            value="{{ request.GET.q }}"
-            placeholder="Поиск книг">
-        <button type="submit">Поиск</button>
-    </form>
+
+<div class="mb-4">
+  <h1 class="mb-3">Список книг</h1>
+
+  <form method="get" class="row g-1">
+    <div class="col-md-6">
+      <input
+        type="text"
+        name="q"
+        value="{{ request.GET.q }}"
+        class="form-control"
+        placeholder="Поиск книг">
     </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary">Поиск</button>
+    </div>
+  </form>
+</div>
+
 {% if book_lst %}
-    <ul>
-        {% for book in book_lst %}
-            <li>
-                <a href='{{ book.get_absolute_url }}'>{{ book.title }} </a>Автор: {{book.author}}
-                {% if user.is_staff %}
-                    - <a href="{% url 'book_delete' book.pk %}">Удалить</a>
-                {% endif %}
-            </li> 
-        {% endfor %}
-    </ul> 
+  <div class="card shadow-sm">
+    <ul class="list-group">
+      {% for book in book_lst %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+          <div>
+            <a href="{{ book.get_absolute_url }}" class="text-decoration-none">
+              {{ book.title }}
+            </a>
+            <div class="text-muted small">Автор: {{ book.author }}</div>
+          </div>
+
+          {% if user.is_staff %}
+            <a href="{% url 'book_delete' book.pk %}" class="btn btn-danger">Удалить</a>
+          {% endif %}
+
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 {% else %}
-    <p>Книги отсутствуют</p>
+  <div class="alert">
+    Книги отсутствуют
+  </div>
 {% endif %}
 
 {% endblock %}

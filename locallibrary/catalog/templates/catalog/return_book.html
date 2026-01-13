@@ -1,5 +1,4 @@
-{% extends "catalog/base.html" %}
-
+{% extends 'catalog/base.html' %}
 {% block content %}
 
 <div class="row justify-content-center">
@@ -8,12 +7,10 @@
     <div class="card shadow-sm border-danger">
       <div class="card-body">
 
-        <h1 class="h5 text-danger mb-3">Удаление книги</h1>
+        <h1 class="h5 mb-3 text-danger">Возврат книги</h1>
 
         <p class="mb-4">
-          Вы действительно хотите удалить книгу
-          <strong>{{ book.title }}</strong>?
-          <br>
+          Вы действительно хотите вернуть эту книгу?
           Это действие нельзя отменить.
         </p>
 
@@ -22,7 +19,7 @@
 
           <div class="d-flex gap-2">
             <button type="submit" class="btn btn-danger">
-              Да, удалить
+              Да, вернуть
             </button>
 
             <a href="javascript:history.back()"

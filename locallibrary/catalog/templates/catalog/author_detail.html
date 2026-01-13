@@ -1,22 +1,66 @@
 {% extends "catalog/base.html" %}
-{% load static %}
 {% block content %}
-  <h1>Автор: {{ author.title }}</h1>
-  <p><strong>Имя:</strong> {{ author.last_name }}</p>
-  <p><strong>Фамилия:</strong> {{ author.first_name }}</p>
-  <p><strong>Дата рождения:</strong> {{ author.date_of_birth }}</p>
-  <p><strong>Дата смерти:</strong> {{ author.date_of_death }}</p>
 
-  <div style='padding:10px;'>
-    <h4>Книги:</h4>
-        {% for copy in author.book_set.all %}
-            <p><b>Заголовок:</b> <a href='{{ copy.get_absolute_url }}'>{{copy.title}}</a></p>
-            <p><b>Описание:</b> {{copy.summary}}</p>
-            <p><b>Жанр:</b> {{copy.dislpay_genre}}</p>
-            <p><b>Язык:</b> {{copy.language}}</p>
-            {% if not forloop.last%}
-              <hr> 
-            {% endif %}
-        {% endfor %}
+<!-- PAGE HEADER -->
+<div class="mb-4">
+  <h1 class="h3 mb-1">
+    {{ author.last_name }} {{ author.first_name }}
+  </h1>
+  <div class="text-muted">
+    Автор
   </div>
+</div>
+
+<!-- AUTHOR INFO -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <div class="row small text-muted">
+      <div class="col-md-6">
+        <strong>Дата рождения:</strong>
+        {{ author.date_of_birth|default:"—" }}
+      </div>
+      <div class="col-md-6">
+        <strong>Дата смерти:</strong>
+        {{ author.date_of_death|default:"—" }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKS -->
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h2 class="h5 mb-3">Книги автора</h2>
+
+    {% if author.book_set.all %}
+      {% for book in author.book_set.all %}
+        <div class="border rounded p-3 mb-3">
+
+          <div class="fw-semibold mb-1">
+            <a href="{{ book.get_absolute_url }}"
+               class="text-decoration-none">
+              {{ book.title }}
+            </a>
+          </div>
+
+          <p class="small text-muted mb-2">
+            {{ book.summary }}
+          </p>
+
+          <div class="small text-muted">
+            <div><strong>Жанр:</strong> {{ book.display_genre }}</div>
+            <div><strong>Язык:</strong> {{ book.language }}</div>
+          </div>
+
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="alert alert-secondary mb-0">
+        У автора нет книг
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
 {% endblock %}

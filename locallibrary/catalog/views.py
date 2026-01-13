@@ -16,7 +16,7 @@ def index(request):
     num_instance = BookInstance.objects.all().count()
     num_authors = Author.objects.count()
     num_genre = Genre.objects.all().count()
-    num_instance_available = BookInstance.objects.filter(status__exact='в').count()
+    num_instance_available = BookInstance.objects.filter(status__exact='a').count()
     num_tbooks = Book.objects.exclude(title='').count()
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
@@ -191,8 +191,19 @@ class DeleteBookView(DeleteView):
     template_name = 'catalog/book_delete.html'
     success_url = reverse_lazy('books')
 
-    
 class DeleteAuthorView(DeleteView):
     model = Author
     template_name = 'catalog/author_delete.html'
     success_url = reverse_lazy('authors')
+
+class ReturnBookView(UpdateView):
+    model = BookInstance
+    fields = []
+    template_name = 'catalog/return_book.html'
+    success_url = reverse_lazy('books')
+
+    def form_valid(self, form):
+        form.instance.borrower = None
+        form.instance.status = 'a'
+        form.instance.due_back = None
+        return super().form_valid(form)

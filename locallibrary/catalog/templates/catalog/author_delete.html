@@ -1,12 +1,41 @@
 {% extends "catalog/base.html" %}
 
 {% block content %}
-  <h1>Удаление автора</h1>
 
-  <p>Вы уверен что хотите удалить автора: {{ author }}?</p>
+<div class="row justify-content-center">
+  <div class="col-sm-10 col-md-6 col-lg-5">
 
-  <form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Да, удалить." />
-  </form>
+    <div class="card shadow-sm border-danger">
+      <div class="card-body">
+
+        <h1 class="h5 text-danger mb-3">Удаление автора</h1>
+
+        <p class="mb-4">
+          Вы действительно хотите удалить автора
+          <strong>{{ author }}</strong>?
+          <br>
+          Это действие нельзя отменить.
+        </p>
+
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">
+              Да, удалить
+            </button>
+
+            <a href="javascript:history.back()"
+               class="btn btn-outline-secondary">
+              Отмена
+            </a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
 {% endblock %}

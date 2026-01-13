@@ -2,39 +2,67 @@
 
 {% block content %}
 
-{% if form.errors %}
-  <p>Вам логин и пароль не совпадают, попробуйте повторить попытку</p>
-{% endif %}
+<div class="row justify-content-center">
+  <div class="col-sm-10 col-md-6 col-lg-4">
 
-{% if next %}
-  {% if user.is_authenticated %}
-    <p>Ваша учетная запись не имееют доступа к данной странице. Для продолжения попробуйте авторизоваться через другую учетную запись
-        для получения доступа.</p>
-  {% else %}
-    <p>Пожалуйста авторизуйтесь</p>
-  {% endif %}
-{% endif %}
+    <!-- CARD -->
+    <div class="card shadow-sm">
+      <div class="card-body">
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
+        <h1 class="h4 mb-3 text-center">Вход в систему</h1>
 
-<tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
-</tr>
+        <!-- ERRORS -->
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            Неверный логин или пароль. Попробуйте ещё раз.
+          </div>
+        {% endif %}
 
-<tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</tr>
-</table>
+        {% if next %}
+          {% if user.is_authenticated %}
+            <div class="alert alert-warning">
+              У вашей учетной записи нет доступа к данной странице.
+              Попробуйте войти под другой учетной записью.
+            </div>
+          {% else %}
+            <div class="alert alert-info">
+              Пожалуйста, авторизуйтесь для продолжения.
+            </div>
+          {% endif %}
+        {% endif %}
 
-<input type="submit" value="Войти" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
+        <!-- FORM -->
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+          <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+          </div>
+
+          <input type="hidden" name="next" value="{{ next }}">
+
+          <button type="submit" class="btn btn-primary w-100">
+            Войти
+          </button>
+        </form>
+
+        <!-- FOOTER -->
+        <div class="text-center mt-3">
+          <a href="{% url 'password_reset' %}" class="small">
+            Забыли пароль?
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
 
 {% endblock %}

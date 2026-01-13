@@ -1,19 +1,45 @@
 {% extends "catalog/base.html" %}
 
 {% block content %}
-    <h1 class='nm-page'>Мои книги</h1>
 
-    {% if borrower_lst %}
-    <ul>
+<!-- PAGE HEADER -->
+<div class="mb-4">
+  <h1>Мои книги</h1>
+</div>
 
+{% if borrower_lst %}
+  <div class="card shadow-sm">
+    <ul class="list-group list-group-flush">
       {% for bookinst in borrower_lst %}
-      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'book_detail' bookinst.book.pk %}">{{bookinst.book.title}}</a> ({{ bookinst.due_back }})
-      </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center
+            {% if bookinst.is_overdue %}list-group-item-danger{% endif %}">
+
+          <div>
+            <a href="{% url 'book_detail' bookinst.book.pk %}"
+               class="fw-semibold text-decoration-none">
+              {{ bookinst.book.title }}
+            </a>
+
+            <div class="small text-muted">
+              Срок возврата: {{ bookinst.due_back }}
+            </div>
+              <form method="POST" action="{% url 'return_book' bookinst.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-outline-danger btn-sm">Вернуть книгу</button>
+          </div>
+
+          {% if bookinst.is_overdue %}
+            <span class="badge bg-danger">Просрочено</span>
+          {% endif %}
+
+        </li>
       {% endfor %}
     </ul>
+  </div>
+{% else %}
+  <div class="alert alert-secondary">
+    У вас отсутствуют арендованные книги.
+  </div>
+{% endif %}
 
-    {% else %}
-      <p>У вас отсутствуют арендованные книги.</p>
-    {% endif %}
 {% endblock %}

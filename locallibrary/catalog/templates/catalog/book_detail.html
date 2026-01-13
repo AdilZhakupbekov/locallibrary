@@ -1,32 +1,76 @@
 {% extends "catalog/base.html" %}
 
 {% block content %}
-  <h1>Заголовок: {{ book.title }}</h1>
 
-  <p><strong>Автор:</strong> <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
-  <p><strong>О книге:</strong> {{ book.summary }}</p>
-  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-  <p><strong>Язык:</strong> {{ book.language }}</p>
-  <p><strong>Жанр:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Копии</h4>
-        {% for copy in book.bookinstance_set.all %}
-          <hr>
-            <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-                {% if copy.status == 'a' %}
-                  {% if user.is_authenticated %}
-                    <form method='GET' action='{% url "reserve_book" copy.pk %}'>
-                      {%csrf_token%}
-                      {{form}}
-                      <input type='submit' value='Арендовать' class='btn'>
-                    </form>
-                  {% endif%}
-                {% elif copy.status != 'a' %}
-                  <p><strong>Дата возврата:</strong> {{copy.due_back}}</p>
-                {% endif %}
-                  <p><strong>Издание:</strong> {{copy.imprint}}</p>
-                  <p class="text-muted"><strong>ID:</strong> {{copy.id}}</p>
-        {% endfor %}
+<!-- PAGE HEADER -->
+<div class="mb-4">
+  <h1 class="h3 mb-1">{{ book.title }}</h1>
+  <div class="text-muted">
+    Автор:
+    <a href="{{ book.author.get_absolute_url }}"
+       class="text-decoration-none">
+      {{ book.author }}
+    </a>
   </div>
+</div>
+
+<!-- BOOK INFO -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <p class="mb-2">
+      <strong>Описание:</strong><br>
+      {{ book.summary }}
+    </p>
+
+    <div class="row small text-muted">
+      <div class="col-md-6"><strong>ISBN:</strong> {{ book.isbn }}</div>
+      <div class="col-md-6"><strong>Язык:</strong> {{ book.language }}</div>
+      <div class="col-12 mt-1">
+        <strong>Жанр:</strong>
+        {% for genre in book.genre.all %}
+          {{ genre }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COPIES -->
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h2 class="h5 mb-3">Экземпляры</h2>
+
+    {% for copy in book.bookinstance_set.all %}
+      <div class="border rounded p-3 mb-3
+        {% if copy.status != 'a' %}border-warning{% else %}border-light{% endif %}">
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="fw-semibold">
+            {{ copy.get_status_display }}
+          </div>
+
+          {% if copy.status == 'a' and user.is_authenticated %}
+            <form method="get" action="{% url 'reserve_book' copy.pk %}">
+              <button class="btn btn-sm btn-outline-primary">
+                Арендовать
+              </button>
+            </form>
+          {% elif copy.status != 'a' %}
+            <span class="badge bg-warning text-dark">
+              до {{ copy.due_back }}
+            </span>
+          {% endif %}
+        </div>
+
+        <div class="small text-muted">
+          <div><strong>Издание:</strong> {{ copy.imprint }}</div>
+          <div><strong>ID:</strong> {{ copy.id }}</div>
+        </div>
+
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
 {% endblock %}
