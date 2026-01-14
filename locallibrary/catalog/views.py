@@ -200,7 +200,19 @@ class ReturnBookView(UpdateView):
     model = BookInstance
     fields = []
     template_name = 'catalog/return_book.html'
-    success_url = reverse_lazy('books')
+    success_url = reverse_lazy('my_books')
+
+    def form_valid(self, form):
+        form.instance.borrower = None
+        form.instance.status = 'a'
+        form.instance.due_back = None
+        return super().form_valid(form)
+    
+class ReturnBookPermView(UpdateView):
+    model = BookInstance
+    fields = []
+    template_name = 'catalog/return_book_perm.html'
+    success_url = reverse_lazy('my_tools')
 
     def form_valid(self, form):
         form.instance.borrower = None

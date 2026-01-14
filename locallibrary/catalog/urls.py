@@ -34,4 +34,6 @@ urlpatterns = [
     path('book/<int:pk>/delete/', views.DeleteBookView.as_view(), name='book_delete'),
     path('reserve_book/<uuid:pk>', views.ReserveBook.as_view(), name='reserve_book'),
     path('return_book/<uuid:pk>', views.ReturnBookView.as_view(), name='return_book'),
+    path('return_book_perm/<uuid:pk>', views.ReturnBookPermView.as_view(), name='return_book_perm'),
+
 ]

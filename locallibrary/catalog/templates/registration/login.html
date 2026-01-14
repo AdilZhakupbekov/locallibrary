@@ -2,30 +2,32 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
-  <div class="col-sm-10 col-md-6 col-lg-4">
+<div class="flex justify-center">
+  <div class="w-full max-w-md">
 
     <!-- CARD -->
-    <div class="card shadow-sm">
-      <div class="card-body">
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="">
 
-        <h1 class="h4 mb-3 text-center">Вход в систему</h1>
+        <h1 class="text-lg font-semibold mb-4 text-center">
+          Вход в систему
+        </h1>
 
         <!-- ERRORS -->
         {% if form.errors %}
-          <div class="alert alert-danger">
+          <div class="mb-4 p-3 rounded-md bg-red-50 text-red-700 text-sm">
             Неверный логин или пароль. Попробуйте ещё раз.
           </div>
         {% endif %}
 
         {% if next %}
           {% if user.is_authenticated %}
-            <div class="alert alert-warning">
+            <div class="mb-4 p-3 rounded-md bg-yellow-50 text-yellow-700 text-sm">
               У вашей учетной записи нет доступа к данной странице.
               Попробуйте войти под другой учетной записью.
             </div>
           {% else %}
-            <div class="alert alert-info">
+            <div class="mb-4 p-3 rounded-md bg-blue-50 text-blue-700 text-sm">
               Пожалуйста, авторизуйтесь для продолжения.
             </div>
           {% endif %}
@@ -35,26 +37,32 @@
         <form method="post" action="{% url 'login' %}">
           {% csrf_token %}
 
-          <div class="mb-3">
-            {{ form.username.label_tag }}
+          <div class="mb-4">
+            <div class="block text-sm font-medium text-gray-700 mb-1">
+              {{ form.username.label_tag }}
+            </div>
             {{ form.username }}
           </div>
 
-          <div class="mb-3">
-            {{ form.password.label_tag }}
+          <div class="mb-4">
+            <div class="block text-sm font-medium text-gray-700 mb-1">
+              {{ form.password.label_tag }}
+            </div>
             {{ form.password }}
           </div>
 
           <input type="hidden" name="next" value="{{ next }}">
 
-          <button type="submit" class="btn btn-primary w-100">
+          <button type="submit"
+                  class="w-full px-4 py-2 rounded-md bg-blue-600 text-white
+                         hover:bg-blue-700">
             Войти
           </button>
         </form>
 
-        <!-- FOOTER -->
-        <div class="text-center mt-3">
-          <a href="{% url 'password_reset' %}" class="small">
+        <div class="text-center mt-4">
+          <a href="{% url 'password_reset' %}"
+             class="text-sm text-blue-600 hover:underline">
             Забыли пароль?
           </a>
         </div>
