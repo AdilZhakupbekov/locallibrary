@@ -1,39 +1,50 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
 
-<div class="">
-  <h1 class="">Список книг</h1>
+<div class="mb-6">
+  <h1 class="text-2xl font-semibold mb-4">Список книг</h1>
 
-  <form method="get" class="">
-    <div class="">
+  <form method="get" class="flex gap-2">
+    <div class="flex-1">
       <input
         type="text"
         name="q"
         value="{{ request.GET.q }}"
-        class=""
+        class="w-full px-3 py-2 border rounded-md text-sm
+               focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Поиск книг">
     </div>
     <div class="">
-      <button type="submit" class="">Поиск</button>
+      <button type="submit"
+              class="px-4 py-2 rounded-md bg-blue-600 text-white
+                     hover:bg-blue-700">
+        Поиск
+      </button>
     </div>
   </form>
 </div>
 
 {% if book_lst %}
-  <div class="">
-    <ul class="">
+  <div class="bg-white rounded-lg shadow">
+    <ul class="divide-y">
       {% for book in book_lst %}
-        <li class="">
+        <li class="flex justify-between items-center px-4 py-3">
 
           <div>
-            <a href="{{ book.get_absolute_url }}" class="">
+            <a href="{{ book.get_absolute_url }}"
+               class="font-semibold text-blue-600 hover:underline">
               {{ book.title }}
             </a>
-            <div class="">Автор: {{ book.author }}</div>
+            <div class="text-sm text-gray-600">
+              Автор: {{ book.author }}
+            </div>
           </div>
 
           {% if user.is_staff %}
-            <a href="{% url 'book_delete' book.pk %}" class="">Удалить</a>
+            <a href="{% url 'book_delete' book.pk %}"
+               class="text-sm text-red-600 hover:underline">
+              Удалить
+            </a>
           {% endif %}
 
         </li>
@@ -41,7 +52,7 @@
     </ul>
   </div>
 {% else %}
-  <div class="">
+  <div class="text-sm text-gray-500">
     Книги отсутствуют
   </div>
 {% endif %}

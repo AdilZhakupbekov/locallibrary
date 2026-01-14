@@ -2,30 +2,41 @@
 
 {% block content %}
 
-<div class="">
-  <div class="">
+<div class="flex justify-center">
+  <div class="w-full max-w-md">
 
     <div class="">
       <div class="">
 
-        <h1 class="">Удаление книги</h1>
+        <h1 class="text-lg font-semibold text-red-600 mb-3">
+          Удаление книги
+        </h1>
 
-        <p class="">
+        <p class="text-gray-700 mb-6">
           Вы действительно хотите удалить книгу
           <strong>{{ book.title }}</strong>?
           <br>
-          Это действие нельзя отменить.
+          <span class="text-sm text-gray-500">
+            Это действие нельзя отменить.
+          </span>
         </p>
 
         <form method="post">
           {% csrf_token %}
 
-          <div class="">
-            <button type="submit" class="">
+          <div class="flex gap-3">
+            <button
+              type="submit"
+              class="px-4 py-2 rounded-md bg-red-600 text-white
+                     hover:bg-red-700">
               Да, удалить
             </button>
 
-            <a href={"% url 'books' %"}>Отмена</a>
+            <a href="{% url 'books' %}"
+               class="px-4 py-2 rounded-md border border-gray-300
+                      text-gray-700 hover:bg-gray-100">
+              Отмена
+            </a>
           </div>
         </form>
 

@@ -2,30 +2,40 @@
 
 {% block content %}
 
-<div class="">
-  <h1>Мои книги</h1>
+<div class="mb-6">
+  <h1 class="text-2xl font-semibold">Мои книги</h1>
 </div>
 
 {% if borrower_lst %}
-  <div class="">
-    <ul class="">
+  <div class="bg-white rounded-lg shadow">
+    <ul class="divide-y">
       {% for bookinst in borrower_lst %}
-        <li class="">
+        <li class="px-4 py-4 flex justify-between items-start">
+
           <div>
             <a href="{% url 'book_detail' bookinst.book.pk %}"
-               class="">{{ bookinst.book.title }}
+               class="font-semibold text-blue-600 hover:underline">
+              {{ bookinst.book.title }}
             </a>
 
-            <div class="">
+            <div class="text-sm text-gray-600 mt-1">
               Срок возврата: {{ bookinst.due_back }}
             </div>
-              <form method="POST" action="{% url 'return_book' bookinst.pk %}">
+
+            <form method="POST" action="{% url 'return_book' bookinst.pk %}">
               {% csrf_token %}
-              <button class="">Вернуть книгу</button>
+              <button
+                class="mt-2 px-3 py-1 rounded-md bg-blue-600 text-white
+                       text-sm hover:bg-blue-700">
+                Вернуть книгу
+              </button>
+            </form>
           </div>
 
           {% if bookinst.is_overdue %}
-            <span class="">Просрочено</span>
+            <span class="text-sm font-medium text-red-600">
+              Просрочено
+            </span>
           {% endif %}
 
         </li>
@@ -33,7 +43,7 @@
     </ul>
   </div>
 {% else %}
-  <div class="">
+  <div class="text-sm text-gray-500">
     У вас отсутствуют арендованные книги.
   </div>
 {% endif %}

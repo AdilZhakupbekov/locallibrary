@@ -2,28 +2,28 @@
 
 {% block content %}
 
-<div class="">
-  <h1 class="">{{ book.title }}</h1>
-  <div class="">
+<div class="mb-6">
+  <h1 class="text-2xl font-semibold mb-1">{{ book.title }}</h1>
+  <div class="text-sm text-gray-600">
     Автор:
     <a href="{{ book.author.get_absolute_url }}"
-       class="">
+       class="text-blue-600 hover:underline">
       {{ book.author }}
     </a>
   </div>
 </div>
 
-<div class="">
+<div class="bg-white rounded-lg shadow p-6 mb-6">
   <div class="">
-    <p class="">
+    <p class="text-gray-700 mb-4">
       <strong>Описание:</strong><br>
       {{ book.summary }}
     </p>
 
-    <div class="">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700">
       <div class=""><strong>ISBN:</strong> {{ book.isbn }}</div>
       <div class=""><strong>Язык:</strong> {{ book.language }}</div>
-      <div class="">
+      <div class="sm:col-span-2">
         <strong>Жанр:</strong>
         {% for genre in book.genre.all %}
           {{ genre }}{% if not forloop.last %}, {% endif %}
@@ -33,31 +33,33 @@
   </div>
 </div>
 
-<div class="">
+<div class="bg-white rounded-lg shadow p-6">
   <div class="">
-    <h2 class="">Экземпляры</h2>
+    <h2 class="text-lg font-semibold mb-4">Экземпляры</h2>
 
     {% for copy in book.bookinstance_set.all %}
-      <div class="">
-        <div class="">
-          <div class="">
+      <div class="border rounded-md p-4 mb-4 last:mb-0">
+
+        <div class="flex justify-between items-center mb-2">
+          <div class="text-sm font-medium text-gray-700">
             {{ copy.get_status_display }}
           </div>
 
           {% if copy.status == 'a' and user.is_authenticated %}
             <form method="get" action="{% url 'reserve_book' copy.pk %}">
-              <button class="">
+              <button class="px-3 py-1 rounded-md bg-blue-600 text-white
+                             text-sm hover:bg-blue-700">
                 Арендовать
               </button>
             </form>
           {% elif copy.status != 'a' %}
-            <span class="">
+            <span class="text-sm text-gray-500">
               до {{ copy.due_back }}
             </span>
           {% endif %}
         </div>
 
-        <div class="">
+        <div class="text-sm text-gray-700">
           <div><strong>Издание:</strong> {{ copy.imprint }}</div>
           <div><strong>ID:</strong> {{ copy.id }}</div>
         </div>

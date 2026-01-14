@@ -6,47 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class=''>
-    <div class=''>
-      <div class=''>
-        <aside class="">
-        <h5 class="">Библиотека</h5>
-        <nav class="">
-          <a href="{% url 'index' %}" class=''>Главная</a>
-          <a href="{% url 'books' %}" class=''>Книги</a>
-          <a href="{% url 'authors' %}" class=''>Авторы</a>
-          <a href="{% url 'my_books' %}" class=''>Мои книги</a>
-          {% if user.is_staff %}
-            <a href="{% url 'my_tools' %}" class=''>Инструменты</a>
-          {% endif %}
-              {% if user.is_authenticated %}
-                <div class=''> {{ user.username }}</div>
+  <body class='bg-gray-100 text-black'>
+    
+      <div class='flex h-screen'>
+        <aside class="w-64 bg-gray-800 text-white flex flex-col lg:flex-row gap-6 p-4">
+            <h1 class="text-md font-bold mb-3 text-left">Библиотека</h1>
+            <nav class="flex flex-col my-2 mt-1 pb-1">
+              <a href="{% url 'index' %}" class='px-3 py-2 my-1 rounded text-sm text-black hover:bg-gray-100 bg-gray-200'>Главная</a>
+              <a href="{% url 'books' %}" class='px-3 py-2 my-1 rounded text-sm text-black hover:bg-gray-100 bg-gray-200'>Книги</a>
+              <a href="{% url 'authors' %}" class='px-3 py-2 my-1 rounded text-sm text-black hover:bg-gray-100 bg-gray-200'>Авторы</a>
+              <a href="{% url 'my_books' %}" class='px-3 py-2 my-1 rounded text-sm text-black hover:bg-gray-100 bg-gray-200'>Мои книги</a>  
+              {% if user.is_staff %}
+                <a href="{% url 'my_tools' %}" class='px-3 py-2 my-1 rounded text-sm text-black hover:bg-gray-100 bg-gray-200'>Инструменты</a>
+              {% endif %}
+            </nav>
+              <div class='border-t pt-2 text-sm'>
+                {% if user.is_authenticated %}
+                  <div class='rounded bg-gray-200 text-black my-3 text-center'>Пользователь: {{ user.username }}</div>
                   <form method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button class="">Выйти</button>
+                    <button class="w-full text-left px-3 py-2 rounded bg-gray-200 text-black hover:bg-white">Выйти</button>
                   </form>
-              {% else %}
-                <a href="{% url 'login' %}" class="">Войти</a>
-              {% endif %}
+                {% else %}
+                  <a href="{% url 'login' %}" class="w-full text-left px-3 py-2 rounded bg-white text-black hover:bg-gray-100">Войти</a>
+                {% endif %}
+              </div>
+
         </aside>
-      <main class=''>
-        {% block content %}{% endblock %}
-            {% if is_paginated %}
-              <nav class="">
-                {% if page_obj.has_previous %}
-                  <a href="?page={{ page_obj.previous_page_number }}">←</a>
-                {% endif %}
-                  <span>
-                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
-                  </span>
-                {% if page_obj.has_next %}
-                  <a href="?page={{ page_obj.next_page_number }}">→</a>
-                {% endif %}
-              </nav>
-            {% endif %}
-          </div>
-      </main>
-      </div>
+        <main class='flex flex-col flex-1 p-6 overflow-y-auto'>
+
+          <div class='flex-1'>{% block content %}{% endblock %}</div>
+          {% if is_paginated %}
+            <nav class="mt-6 flex justify-center items-center gap-4 text-sm text-gray-600">
+              {% if page_obj.has_previous %} 
+                <a href="?page={{ page_obj.previous_page_number }}"class="px-3 py-1 rounded hover:bg-gray-200">←</a>
+              {% endif %}
+              <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+              {% if page_obj.has_next %}
+              <a href="?page={{ page_obj.next_page_number }}"class="px-3 py-1 rounded hover:bg-gray-200">→</a>
+              {% endif %}
+            </nav>
+          {% endif %}
+
+        </main>
     </div>
+
   </body>
 </html>

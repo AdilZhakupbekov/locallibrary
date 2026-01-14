@@ -1,18 +1,18 @@
 {% extends "catalog/base.html" %}
 {% block content %}
 
-<div class="">
-  <h1 class="">
+<div class="mb-6">
+  <h1 class="text-2xl font-semibold mb-1">
     {{ author.last_name }} {{ author.first_name }}
   </h1>
-  <div class="">
+  <div class="text-sm text-gray-500">
     Автор
   </div>
 </div>
 
-<div class="">
+<div class="bg-white rounded-lg shadow p-6 mb-6">
   <div class="">
-    <div class="">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
       <div class="">
         <strong>Дата рождения:</strong>
         {{ author.date_of_birth|default:"—" }}
@@ -25,26 +25,26 @@
   </div>
 </div>
 
-<div class="">
+<div class="bg-white rounded-lg shadow p-6">
   <div class="">
-    <h2 class="">Книги автора</h2>
+    <h2 class="text-lg font-semibold mb-4">Книги автора</h2>
 
     {% if author.book_set.all %}
       {% for book in author.book_set.all %}
-        <div class="">
+        <div class="border rounded-md p-4 mb-4 last:mb-0">
 
-          <div class="">
+          <div class="font-semibold mb-1">
             <a href="{{ book.get_absolute_url }}"
-               class="">
+               class="text-blue-600 hover:underline">
               {{ book.title }}
             </a>
           </div>
 
-          <p class="">
+          <p class="text-sm text-gray-600 mb-2">
             {{ book.summary }}
           </p>
 
-          <div class="">
+          <div class="text-sm text-gray-700">
             <div><strong>Жанр:</strong> {{ book.display_genre }}</div>
             <div><strong>Язык:</strong> {{ book.language }}</div>
           </div>
@@ -52,7 +52,7 @@
         </div>
       {% endfor %}
     {% else %}
-      <div class="">
+      <div class="text-sm text-gray-500">
         У автора нет книг
       </div>
     {% endif %}

@@ -1,43 +1,43 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
 
-<div class="">
-  <h1>Настройки</h1>
-  <p class="">Управление арендованными книгами</p>
+<div class="mb-6">
+  <h1 class="text-2xl font-semibold mb-1">Настройки</h1>
+  <p class="text-sm text-gray-600">Управление арендованными книгами</p>
 </div>
 
-<div class="">
-  <div class="">
+<div class="bg-white rounded-lg shadow mb-8">
+  <div class="overflow-x-auto">
 
-    <table class="">
-      <caption class="">
+    <table class="w-full text-sm">
+      <caption class="text-left px-4 py-3 text-gray-600 font-medium">
         Список арендованных книг
       </caption>
 
-      <thead class="">
+      <thead class="bg-gray-100 text-gray-700">
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Книга</th>
-          <th scope="col">Владелец</th>
-          <th scope="col">Дата возврата</th>
-          <th scope="col" class="">Действия</th>
+          <th scope="col" class="px-4 py-2 text-left">ID</th>
+          <th scope="col" class="px-4 py-2 text-left">Книга</th>
+          <th scope="col" class="px-4 py-2 text-left">Владелец</th>
+          <th scope="col" class="px-4 py-2 text-left">Дата возврата</th>
+          <th scope="col" class="px-4 py-2 text-left">Действия</th>
         </tr>
       </thead>
 
-      <tbody>
+      <tbody class="divide-y">
         {% for ins in instances %}
-          <tr>
-            <td>{{ ins.book.pk }}</td>
-            <td class="fw-semibold">{{ ins.book.title }}</td>
-            <td>{{ ins.borrower }}</td>
-            <td>{{ ins.due_back }}</td>
-            <td class="">
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2">{{ ins.book.pk }}</td>
+            <td class="px-4 py-2 fw-semibold">{{ ins.book.title }}</td>
+            <td class="px-4 py-2">{{ ins.borrower }}</td>
+            <td class="px-4 py-2">{{ ins.due_back }}</td>
+            <td class="px-4 py-2 flex gap-3">
               <a href="{% url 'book_renew' ins.pk %}"
-                 class="">
+                 class="text-blue-600 hover:underline">
                 Редактировать
               </a>
               <a href="{% url 'return_book' ins.pk %}"
-                 class="">
+                 class="text-red-600 hover:underline">
                 Возвратить
               </a>
             </td>
@@ -49,15 +49,19 @@
   </div>
 </div>
 
-<div class="">
+<div class="bg-white rounded-lg shadow p-6">
   <div class="">
-    <h2 class="">Добавление объектов</h2>
+    <h2 class="text-lg font-semibold mb-4">Добавление объектов</h2>
 
-    <div class="">
-      <a class="" href="{% url 'book_create' %}">
+    <div class="flex gap-3">
+      <a class="px-4 py-2 rounded-md bg-blue-600 text-white
+                hover:bg-blue-700"
+         href="{% url 'book_create' %}">
         Добавить книгу
       </a>
-      <a class="" href="{% url 'author_create' %}">
+      <a class="px-4 py-2 rounded-md bg-blue-600 text-white
+                hover:bg-blue-700"
+         href="{% url 'author_create' %}">
         Добавить автора
       </a>
     </div>
